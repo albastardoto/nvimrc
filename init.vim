@@ -5,6 +5,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 "Plug 'tsony-tsonev/nerdtree-git-plugin'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-surround'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
@@ -21,11 +22,26 @@ Plug 'mlaursen/vim-react-snippets'
 
 Plug 'vim-python/python-syntax'
 Plug 'szymonmaszke/vimpyter' "vim-plug
-Plug 'davidhalter/jedi-vim'
 Plug 'bfredl/nvim-ipy'
 
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'lervag/vimtex'
+ 
+Plug 'ludovicchabant/vim-gutentags'
 " Initialize plugin system
 call plug#end()
+
+let mapleader=" "
+
+
+
+" latex
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'evince'
+let g:livepreview_engine = 'pdflatex'
+let g:tex_flavor = 'latex'
+
+"nerdtree
 
 nmap <C-n> :NERDTreeToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
@@ -41,21 +57,23 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd vimenter * if !argc() | NERDTree | endif
 
 let g:NERDTreeGitStatusWithFlags = 1
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 "let g:NERDTreeGitStatusNodeColorization = 1
 "let g:NERDTreeColorMapCustom = {
-"   "\ "Staged"    : "#0ee375",  
-"   "\ "Modified"  : "#d9bf91",  
-"   "\ "Renamed"   : "#51C9FC",  
-"   "\ "Untracked" : "#FCE77C",  
-"   "\ "Unmerged"  : "#FC51E6",  
-"   "\ "Dirty"     : "#FFBD61",  
-"   "\ "Clean"     : "#87939A",   
-"   "\ "Ignored"   : "#808080"   
-"   "\ }                         
-"
+   ""\ "Staged"    : "#0ee375",  
+   ""\ "Modified"  : "#d9bf91",  
+   ""\ "Renamed"   : "#51C9FC",  
+   ""\ "Untracked" : "#FCE77C",  
+   ""\ "Unmerged"  : "#FC51E6",  
+   ""\ "Dirty"     : "#FFBD61",  
+   ""\ "Clean"     : "#87939A",   
+   ""\ "Ignored"   : "#808080"   
+   ""\ }                         
+
 
 let g:NERDTreeIgnore = ['^node_modules$']
+
+nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
 
 " vim-prettier
 "let g:prettier#quickfix_enabled = 0
@@ -69,6 +87,7 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " ctrlp
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+nnoremap <leader>. :CtrlPTag<cr>
 
 " j/k will move virtual lines (lines that wrap)
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')

@@ -8,7 +8,8 @@
     "javascriptreact",
     "typescript.tsx",
     "graphql",
-    "python"
+    "python",
+    "scala"
   ],
 
   "jedi.enable": true,
@@ -21,5 +22,6 @@
   "jedi.diagnostics.enable": true,
   "jedi.diagnostics.didOpen": true,
   "jedi.diagnostics.didChange": true,
-  "jedi.diagnostics.didSave": true
+  "jedi.diagnostics.didSave": true,
+  "clangd.path": "/home/albert/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd"
 }
