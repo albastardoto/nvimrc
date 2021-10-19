@@ -1,6 +1,7 @@
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
 
+Plug 'ajmwagar/vim-deus',
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 "Plug 'tsony-tsonev/nerdtree-git-plugin'
@@ -41,26 +42,30 @@ let g:livepreview_previewer = 'evince'
 let g:livepreview_engine = 'pdflatex'
 let g:tex_flavor = 'latex'
 
-"nerdtree
 
-nmap <C-n> :NERDTreeToggle<CR>
-vmap ++ <plug>NERDCommenterToggle
-nmap ++ <plug>NERDCommenterToggle
 
 
 "vimPyter
 autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
 autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
 autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
+
+
 " open NERDTree automatically
 autocmd StdinReadPre * let s:std_in=1
 autocmd vimenter * if !argc() | NERDTree | endif
 
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+" Automaticaly close nvim if NERDTree is only thing left open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 let g:NERDTreeGitStatusWithFlags = 1
+ 
 "let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 "let g:NERDTreeGitStatusNodeColorization = 1
 "let g:NERDTreeColorMapCustom = {
-   ""\ "Staged"    : "#0ee375",  
+   ""\ "Staget"    : "#0ee375",  
    ""\ "Modified"  : "#d9bf91",  
    ""\ "Renamed"   : "#51C9FC",  
    ""\ "Untracked" : "#FCE77C",  
@@ -101,26 +106,11 @@ set tabstop=2
 set shiftwidth=2
 " always uses spaces instead of tab characters
 set expandtab
+set autoindent
+set textwidth=80
 
-colorscheme gruvbox
+color deus
 
-" sync open file with NERDTree
-" " Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
- return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
-
-" Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
 
 " coc config
 let g:coc_global_extensions = [
@@ -251,3 +241,10 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+
+"gitgutter
+highlight SignColumn ctermbg=none
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
